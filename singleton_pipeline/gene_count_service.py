@@ -5,6 +5,7 @@ import sys
 
 import itertools
 
+total_individuals_number  = 460692 #number of pepole in general 
 
 
 def gene_count (input_directory ,chr_name  ) : 
@@ -15,8 +16,8 @@ def gene_count (input_directory ,chr_name  ) :
     for file_path in files:
         print (file_path)
         df = pd.read_csv(directory_path+"/"+file_path)
-        df_grouped = df.groupby("gene")[["lof" ,	"lof_singleton" , 	"missense" , 	"missense_singleton"]].sum().reset_index()
-        df_grouped_individual = df.groupby("Individual")[["lof" ,	"lof_singleton" , 	"missense" , 	"missense_singleton"]].sum().reset_index()
+        df_grouped = df.groupby("gene")[["lof" ,"missense" , "lof_or_missense"]].sum().reset_index()
+        df_grouped_individual = df.groupby("Individual")[["lof" ,"missense" , "lof_or_missense"]].sum().reset_index()
         dfs.append(df_grouped)
         dfs_individual.append(df_grouped_individual)
 

@@ -7,8 +7,8 @@ from scipy.stats import poisson
 import itertools 
 import sys
 
+total_individuals_number  = 431631
 
-total_individuals_number = 431631
 
 def count_appearance_for_each_snv(df): 
     # Count the number of individuals who have SNV
@@ -32,13 +32,22 @@ def count_appearance_for_each_snv(df):
         snv_count_df['countHetero'] + 2 * snv_count_df['countHomo']
     ) / (2 * total_individuals_number)
 
-    minor_allele = snv_count_df[snv_count_df['allele_frequency'] < 0.01]
+    # Filter by AF < 0.001 (0.1%)
+    rare_snvs = snv_count_df[snv_count_df['allele_frequency'] < 0.001]
 
-    return minor_allele
+    return rare_snvs
 
 
 
 
+# def count_appearance_for_each_snv(df) : 
+
+#     #Count the number of individuals who have  SNV in their DNA.
+#     snv_count_df = pd.DataFrame({"count" : df.groupby(['SNV','count_Mut'  ,'gene'  ]).count_Mut.count()} )
+#     snv_count_df = snv_count_df.pivot_table( index=['SNV', 'gene'], columns='count_Mut', values='count', fill_value=0).reset_index()
+    
+#     snv_count_df.rename(columns={1: 'countHetero' ,2 : "countHomo"}, inplace=True)
+#     return snv_count_df
 
 def concat_chromosome_files_with_parts(dfs, chromosome_name, folder_output):
     create_folder_if_not_exists(folder_output)
@@ -141,7 +150,6 @@ def def_count(value) :
 def process_file (name , folder_input , type=1  ) : 
 ## type 1 for missnece and 2 for syn
 
-    total_individuals_number  = 460692
     
     dtype_dict = {'id': str}
     #participants_uk = pd.read_csv("C:/Users/maliz/thesa/UKbiobank/data/participants_uk.csv",  dtype=dtype_dict)
@@ -159,8 +167,7 @@ def process_file (name , folder_input , type=1  ) :
         data_file_name = dict_file.replace("dict", "data")
 
         data_file = [file for file in data_files if data_file_name  in file]
-        dtype_dict = {'Individual': str}
-        data_df = pd.read_csv(folder_input+data_file[0] ,  dtype=dtype_dict)
+        data_df = pd.read_csv(folder_input+data_file[0] )
         data_df = data_df.drop_duplicates(subset=["SNV_separated", "Individual"], keep="last")
          
         full_dict_df = pd.read_csv(folder_input+dict_file )
@@ -243,21 +250,16 @@ def process_file (name , folder_input , type=1  ) :
 
         data_df = data_df.drop_duplicates( subset=['SNV' , 'gene' , 'Individual' ]).copy()
         print ("df after drop duplicates" + str(data_df.shape))
-        data_df = data_df[data_df.Individual.isin(participants_uk.id)]
-        print ("df after participants_uk number" + str(data_df.shape))
-        # minor_allele  = count_appearance_for_each_snv(data_df)
-        
-        # data_df_cutoff = data_df[data_df['SNV'].isin(minor_allele.SNV.tolist())]
-        snv_counts = data_df['SNV'].value_counts()
 
-        snv_freq = snv_counts / total_individuals_number
+        rare_variants  = count_appearance_for_each_snv(data_df)
+        data_df_cutoff = data_df[data_df['SNV'].isin(rare_variants.SNV.tolist())]
+
+        data_df_cutoff = data_df_cutoff[data_df_cutoff.Individual.isin(participants_uk.id)]
+        print ("df after participants_uk number" + str(data_df_cutoff.shape))
         
-        # filter SNVs that are <= 1% frequency
-        rare_snvs = snv_freq[snv_freq <= 0.001].index
-        
-        # keep only rare SNVs in df
-        data_df_cutoff = data_df[data_df['SNV'].isin(rare_snvs)]
+    
         dfs[dict_file] = data_df_cutoff
+        
      
         
     return dfs

@@ -38,7 +38,10 @@ def permute_gene2(df, number):
         df_permuted.loc[conflict_idx, ['gene_2', 'chr_2']] = conflict_block.values
 
             
-               
+        
+           
+
+
 if __name__ == "__main__":
     df_paralogs = pd.read_csv(
         "/sci/labs/orzuk/mali.tsadok/UKB/all_data/permutations/olida_pairs_full_version.csv"

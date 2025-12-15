@@ -1,0 +1,54 @@
+{
+  "name": "annotation_applet",
+  "title": "annotation_applet",
+  "summary": "annotation_applet",
+  "dxapi": "1.0.0",
+  "inputSpec": [
+    {
+      "name": "vcf_in",
+      "help": "",
+      "class": "array:file",
+      "patterns": ["*"],
+      "optional": false
+    }
+  ],
+  "outputSpec": [
+    {
+      "name": "results",
+      "help": "",
+      "class": "array:file",
+      "patterns": ["*"]
+    }
+  ],  
+    "runSpec": {
+    "timeoutPolicy": {
+      "*": {
+        "hours": 48
+      }
+    },
+    "interpreter": "bash",
+    "release": "20.04",
+    "distribution": "Ubuntu",
+    "file": "src/code.sh",
+    "version": "0"
+  }, 
+
+  
+  "access": {
+    "network": [
+      "*"
+    ]
+  },
+  "ignoreReuse": false,
+  "regionalOptions": {
+    "aws:eu-west-2": {
+      "systemRequirements": {
+        "*": {
+          "instanceType": "mem3_ssd1_v2_x16",
+		  "maxSpotTries" : 3
+        }
+      }
+    }
+  } 
+}
+
