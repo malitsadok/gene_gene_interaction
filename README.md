@@ -76,7 +76,29 @@ It uses the folder **pipeline_scripts_singleton** and executes the pipeline in m
 
 * The same pipeline can be run on the **all-set version of the data**.
 * For this version, there are some differences in the scripts and in the folder structure for storing the data.
-* The new pipeline is defined in the CSV file `pipeline_scripts_all_data`  and the shell and Python files are in the `all_set_pipeline` folder.
+* The new pipeline is defined in the CSV file `scripts_all_data_pipeline`  and the shell and Python files are in the `all_data_pipeline` folder.
+
+# Group-Based Permutation Pipeline
+
+This pipeline performs **group-based permutation analysis** for two types of gene sets: `olida` and `paralogs`.
+
+## Input Data
+- Input files are located on the cluster.
+- Make sure the data paths are updated in the scripts if needed.
+
+## Pipeline Structure
+The order of scripts is defined in the CSV `group_based_permutation_pipeline.csv`.  
+Scripts are located in the corresponding folders in this repository:
+
+- `olida/`
+- `paralogs/`
+
+---
+
+## Running the Pipeline
+
+### Olida
+Run the scripts in the order specified in the CSV under the `olida` section:
 
 
 
