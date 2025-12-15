@@ -1,4 +1,4 @@
-# Pair gens analysis 
+# Pair genes pipeline
 
 ## DNA Nexus Part
 This part of the project is handled by the folder **annotation_applet**.  
