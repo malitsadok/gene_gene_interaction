@@ -1,6 +1,6 @@
-# DNA Nexus Part
+# Pair gens analysis 
 
-## Overview
+## DNA Nexus Part
 This part of the project is handled by the folder **annotation_applet**.  
 It contains the necessary files and structure to run the annotation workflow in DNA Nexus.
 
