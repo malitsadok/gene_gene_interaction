@@ -72,9 +72,9 @@ It uses the folder **pipeline_scripts_singleton** and executes the pipeline in m
    * For the singleton pipeline, both the shell and Python files are in the `singleton_pipeline` folder.
    * Make sure the input and output folders are correctly specified for each run.
 
-### Running the Pipeline on All-Set Data
+### Running the all data Pipeline  
 
-* The same pipeline can be run on the **all-set version of the data**.
+* The same pipeline can be run on the **all-data version of analysis**.
 * For this version, there are some differences in the scripts and in the folder structure for storing the data.
 * The new pipeline is defined in the CSV file `scripts_all_data_pipeline`  and the shell and Python files are in the `all_data_pipeline` folder.
 
@@ -93,12 +93,7 @@ Scripts are located in the corresponding folders in this repository:
 - `olida/`
 - `paralogs/`
 
----
 
-## Running the Pipeline
-
-### Olida
-Run the scripts in the order specified in the CSV under the `olida` section:
 
 
 
