@@ -1,0 +1,10 @@
+bash_script,service,input_dir,output_dir
+ensembl.sh,ensembl.py,/sci/labs/orzuk/mali.tsadok/UKB/raw_data,/sci/labs/orzuk/mali.tsadok/UKB/raw_data
+combine_and_filter_service.sh,combine_and_filter_service.py,/sci/labs/orzuk/mali.tsadok/UKB/raw_data,/sci/labs/orzuk/mali.tsadok/UKB/filter_data
+calc_gene_Individual_service.sh,Individual_gene_matrix.py,/sci/labs/orzuk/mali.tsadok/UKB/filter_data,/sci/labs/orzuk/mali.tsadok/UKB/Individual_gene
+calc_gene_count_service.sh,gene_count_service.py,/sci/labs/orzuk/mali.tsadok/UKB/Individual_gene,/sci/labs/orzuk/mali.tsadok/UKB/counted_data
+calc_interaction_for_all_data.sh,calc_interactions.sh,/sci/labs/orzuk/mali.tsadok/UKB/Individual_gene,/sci/labs/orzuk/mali.tsadok/UKB/counted_data
+calc_mutation_prop_per_Individual.sh,calc_p.py,/sci/labs/orzuk/mali.tsadok/UKB/counted_data,/sci/labs/orzuk/mali.tsadok/UKB/counted_data
+calc_statistic.sh,calc_statistics.py,/sci/labs/orzuk/mali.tsadok/UKB/counted_data,/sci/labs/orzuk/mali.tsadok/UKB/results
+calc_statistic_2.sh,calc_statistics_total_result.py,/sci/labs/orzuk/mali.tsadok/UKB/results,/sci/labs/orzuk/mali.tsadok/UKB/results/final
+calc_statistic_same_chromosome.sh,calc_statistics.py,/sci/labs/orzuk/mali.tsadok/UKB/counted_data,/sci/labs/orzuk/mali.tsadok/UKB/results
