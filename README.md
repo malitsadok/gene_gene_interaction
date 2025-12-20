@@ -153,7 +153,7 @@ add_expected_for_olida.py
 
 #### Output
 
-* Adds **expected** and **observed** counts for score 0 gene pairs
+* `olida_pairs_filtered_by_score_0.csv`
 
 ---
 
@@ -167,8 +167,8 @@ create_permutation_olida_model.py
 
 #### Description
 
-* Generates **10,000 permutations** for the Olida model
-* Produces permutation files for score 0
+* Generates **10,000 permutations** for the Olida  using `olida_pairs_filtered_by_score_0.csv`
+* Produces permutation files for score 0 
 
 ---
 
@@ -180,6 +180,15 @@ Run:
 add_expected_for_olida_permutations.py
 ```
 
+#### Inputs
+
+* Permutation files generated in Step 3
+* The three CSV files from `all_data_results.zip`
+
+
+#### Output
+
+* Updated permutation files with observed and expected counts for each varian
 
 ## Step 3: Null Distribution and P-Value Calculation
 
