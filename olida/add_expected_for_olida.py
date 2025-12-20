@@ -37,13 +37,13 @@ file_configs = [
     {
         "name": "missense",
         "input_path": "/sci/labs/orzuk/mali.tsadok/UKB/all_data/results/final/lof/missense_final_result.csv",
-        "output_path": "/sci/labs/orzuk/mali.tsadok/UKB/all_data/results/final/lof/olida_missense_0__results.csv"
+        "output_path": "/sci/labs/orzuk/mali.tsadok/UKB/all_data/results/final/lof/olida_missense_0_results.csv"
     },
 
      {
         "name": "lof_missense_combined",
         "input_path": "/sci/labs/orzuk/mali.tsadok/UKB/all_data/results/final/lof/lof_missense_combined_final_result.csv",
-        "output_path": "/sci/labs/orzuk/mali.tsadok/UKB/all_data/results/final/lof/olida_lof_missense_0__combined_results.csv"
+        "output_path": "/sci/labs/orzuk/mali.tsadok/UKB/all_data/results/final/lof/olida_lof_missense_0_combined_results.csv"
     }
 ]
 

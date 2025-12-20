@@ -126,7 +126,12 @@ These files are required for all downstream analyses in both pipelines.
 
 **Script:** `add_expected_for_olida.py`
 **Input:** `olida_pairs_filtered_by_score_0_original.csv`, all_data_results.zip
-**Output:** `olida_pairs_filtered_by_score_0.csv`
+**Output:**
+
+
+*  `olida_lof_0_results.csv`
+*  `olida_missense_0_results.csv`
+* `olida_lof_missense_combined_0_results.csv`
 **Description:** Computes expected and observed counts.
 
 #### Step 2.2: Generate Permutations
