@@ -72,6 +72,9 @@ Each phase must be run **one by one**, following the order specified in the CSV 
 
 
 
+Got it! You want a **compact, structured README** without a table, but still showing **Inputs → Script → Output → Description** clearly and consistently. Here’s a cleaned-up version:
+
+---
 
 # Group-Based Permutation Pipeline
 
@@ -82,21 +85,21 @@ This pipeline performs **group-based permutation analysis** for two types of gen
 
 ---
 
-### Shared Input Files
+## Shared Input
 
-The `all_data_pipeline` generates the following ZIP archive, which serves as the **input** for this pipeline:
+The `all_data_pipeline` generates the ZIP archive:
 
 ```
 all_data_results.zip
 ```
 
-This archive contains three CSV files:
+**Contains:**
 
 * `lof_final_result.csv`
 * `missense_final_result.csv`
 * `lof_missense_combined_final_result.csv`
 
-These files are required for all downstream analyses in both the **Olida** and **Paralogs** pipelines.
+These files are required for all downstream analyses in both pipelines.
 
 ---
 
@@ -104,121 +107,52 @@ These files are required for all downstream analyses in both the **Olida** and *
 
 ### Step 1: Preparation
 
-Run the Python script:
-
-```
-olida_preperations.py
-```
-
-#### Input
-
-* `olida.json`
-* `GeneCombination_olida.csv`
-
-#### Output
+**Script:** `olida_preperations.py`
+**Input:** `olida.json`, `GeneCombination_olida.csv`
+**Output:**
 
 * `olida_pairs_filtered_by_score_0_original.csv`
 * `olida_pairs_filtered_by_score_1_original.csv`
 * `olida_pairs_filtered_by_score_2_3_original.csv`
+  **Description:** Prepares Olida pairs split by score.
 
 ---
 
-### Step 2: Run Score-Specific Analysis (Example: Score = 0)
+### Step 2: Score-Specific Analysis (Example: Score = 0)
 
-These steps must be run **separately for each score category**. Below, we demonstrate **score = 0**.
-
-> ⚠️ **Important:** For each score, ensure input/output paths in the scripts correspond to the correct score.
+> ⚠️ For each score (0, 1, 2–3), update input/output paths accordingly.
 
 #### Step 2.1: Add Expected and Observed Counts
 
-Run:
-
-```
-add_expected_for_olida.py
-```
-
-**Inputs**
-
-* `olida_pairs_filtered_by_score_0_original.csv`
-* The three CSV files from `all_data_results.zip`
-
-**Output**
-
-* `olida_pairs_filtered_by_score_0.csv`
-
-**Description**
-
-* Computes **expected** and **observed** counts for Olida gene pairs
-
----
+**Script:** `add_expected_for_olida.py`
+**Input:** `olida_pairs_filtered_by_score_0_original.csv`, all_data_results.zip
+**Output:** `olida_pairs_filtered_by_score_0.csv`
+**Description:** Computes expected and observed counts.
 
 #### Step 2.2: Generate Permutations
 
-Run:
-
-```
-create_permutation_olida_model.py
-```
-
-**Inputs**
-
-* `olida_pairs_filtered_by_score_0.csv`
-
-**Output**
-
-* Permutation files for score 0
-
-**Description**
-
-* Generates **10,000 permutations** for the Olida model
-
----
+**Script:** `create_permutation_olida_model.py`
+**Input:** `olida_pairs_filtered_by_score_0.csv`
+**Output:** Permutation files
+**Description:** Generates 10,000 permutations for Olida.
 
 #### Step 2.3: Add Expected Values to Permutations
 
-Run:
-
-```
-add_expected_for_olida_permutations.py
-```
-
-**Inputs**
-
-* Permutation files generated in Step 2.2
-* The three CSV files from `all_data_results.zip`
-
-**Output**
-
-* Updated permutation files with observed and expected counts for each variant
-
-**Description**
-
-* Adds expected values for each permutation
+**Script:** `add_expected_for_olida_permutations.py`
+**Input:** Permutation files, all_data_results.zip
+**Output:** Updated permutation files
+**Description:** Adds expected counts to permutations.
 
 ---
 
 ### Step 3: Null Distribution and P-Value Calculation
 
-Run:
+**Script:** `olida_distribution.py`
+**Input:** Original & permutation files (all scores)
+**Output:** P-values & null distributions
+**Description:** Constructs null distribution and extracts p-values.
 
-```
-olida_distribution.py
-```
-
-**Inputs**
-
-* Original and permutation files from **all score categories**
-
-**Output**
-
-* P-values and null distributions for all Olida pairs
-
-**Description**
-
-* Constructs the **null distribution**
-* Extracts **p-values** for the observed statistics
-
-> ⚠️ **Important:** This step is executed **once**, after all score-specific analyses are complete. Ensure file paths are correctly configured.
+> ⚠️ Run **once** after all score-specific analyses.
 
 ---
 
@@ -226,118 +160,55 @@ olida_distribution.py
 
 ### Step 1: Preparation
 
-Run the notebook:
-
-```
-paralogs_preperation.ipynb
-```
-
-**Input**
-
-* `Original_Pralogs_Data.csv`
-
-**Output**
-
-* `paralogs.csv`
-
-**Description**
-
-* Prepares paralog gene pair data for downstream analysis
+**Notebook:** `paralogs_preperation.ipynb`
+**Input:** `Original_Pralogs_Data.csv`
+**Output:** `paralogs.csv`
+**Description:** Prepares paralog gene pairs for analysis.
 
 ---
 
 ### Step 2: Add Expected and Observed Counts
 
-Run:
-
-```
-add_expected_for_paralogs.py
-```
-
-**Inputs**
-
-* `paralogs.csv`
-* The three CSV files from `all_data_results.zip`
-
-**Output**
+**Script:** `add_expected_for_paralogs.py`
+**Input:** `paralogs.csv`, all_data_results.zip
+**Output:**
 
 * `paralogs_lof_results.csv`
 * `paralogs_missense_results.csv`
 * `paralogs_lof_missense_combined_results.csv`
-
-**Description**
-
-* Computes **expected** and **observed** counts for paralog gene pairs
+  **Description:** Computes expected and observed counts for paralogs.
 
 ---
 
 ### Step 3: Generate Permutations
 
-Run:
-
-```
-create_permutation.py
-```
-
-**Inputs**
-
-* `paralogs.csv`
-
-**Output**
-
-* Permutation files for paralogs
-
-**Description**
-
-* Generates permutation datasets for the paralogs model
+**Script:** `create_permutation.py`
+**Input:** `paralogs.csv`
+**Output:** Permutation files
+**Description:** Generates permutation datasets for paralogs.
 
 ---
 
 ### Step 4: Add Expected Values to Permutations
 
-Run:
-
-```
-add_expected_for_permutation_paralogs.py
-```
-
-**Inputs**
-
-* Permutation files generated in Step 3
-* The three CSV files from `all_data_results.zip`
-
-**Output**
-
-* Updated permutation files with observed and expected counts for each variant class
-
-**Description**
-
-* Adds expected values for each permutation
+**Script:** `add_expected_for_permutation_paralogs.py`
+**Input:** Permutation files (from Step 3), all_data_results.zip
+**Output:** Updated permutation files with observed and expected counts
+**Description:** Adds expected counts to permutations.
 
 ---
 
 ### Step 5: Null Distribution and P-Value Calculation
 
-Run the notebook:
+**Notebook:** `paralog_distribution.ipynb`
+**Input:** Updated permutation files, `paralogs.csv`
+**Output:** P-values & null distributions
+**Description:** Constructs null distribution and extracts p-values.
 
-```
-paralog_distribution.ipynb
-```
+> ⚠️ Ensure file paths are updated correctly before running each step. Step 5 is run **once**, after all permutations are complete.
 
-**Inputs**
+---
 
-* Updated permutation files from Step 4
-* `paralogs.csv`
+This keeps the README **linear, compact, and readable** without tables, while maintaining **Inputs / Script / Output / Description** consistently.
 
-**Output**
-
-* P-values and null distributions for all paralog pairs
-
-**Description**
-
-* Constructs the **null distribution**
-* Extracts **p-values** for paralog gene pairs
-
-> ⚠️ **Important:** Ensure file paths are updated to the correct locations before running each step.
-
-
+If you want, I can also **add small emojis or bullets** to visually separate steps, which makes it even more readable. Do you want me to do that?
