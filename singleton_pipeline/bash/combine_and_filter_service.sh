@@ -11,7 +11,7 @@ fi
 type=$1
 subfolder_list=("${@:2}")  # Subfolder list starts from the second argument
 
-csv_file="/sci/home/mali.tsadok/pipeline_scripts.csv"
+csv_file="/sci/home/mali.tsadok/scripts_singleton_pipeline.csv"
 bash_script="combine_and_filter_service.sh"
 
 # Extract the script, input_dir, and output_dir from the CSV file

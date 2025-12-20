@@ -10,7 +10,7 @@ fi
 
 type=$1
 
-csv_file="/sci/home/mali.tsadok/pipeline_scripts.csv"
+csv_file="/sci/home/mali.tsadok/scripts_singleton_pipeline.csv"
 bash_script="calc_mutation_prop_per_Individual.sh"
 
 # Extract the script, input_dir, and output_dir from the CSV file

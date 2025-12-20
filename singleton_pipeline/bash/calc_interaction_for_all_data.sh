@@ -17,7 +17,7 @@ type=$1
 
 
 subfolder_list=("${@:2}") 
-csv_file="/sci/home/mali.tsadok/pipeline_scripts.csv" # Accepts additional arguments as the list of subfolders
+csv_file="/sci/home/mali.tsadok/scripts_singleton_pipeline.csv" # Accepts additional arguments as the list of subfolders
 bash_script="calc_interaction_for_all_data.sh"
 	
 #bash_script="calc_gene_count_service.sh"

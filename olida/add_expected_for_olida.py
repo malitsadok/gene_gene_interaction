@@ -1,15 +1,15 @@
 import pandas as pd
 
 # Load paralogs
-df_paralogs = pd.read_csv("/sci/labs/orzuk/mali.tsadok/UKB/all_data/permutations/olida_pairs_final.csv")
+df_group = pd.read_csv("/sci/labs/orzuk/mali.tsadok/UKB/all_data/permutations/olida_pairs_filtered_by_score_0_original.csv")
 
 # Filtering function
-def filter_by_paralogs(df_input, df_paralogs, out_path):
+def filter_by_paralogs(df_input, df_group, out_path):
     # Merge on gene_1 + gene_2
-    merged1 = df_input.merge(df_paralogs, on=['gene_1', 'gene_2'], how='inner')
+    merged1 = df_input.merge(df_group, on=['gene_1', 'gene_2'], how='inner')
     # Merge on reversed pairs
     merged2 = df_input.merge(
-      df_paralogs,
+      df_group,
       left_on=['gene_1', 'gene_2'],
       right_on=['gene_2', 'gene_1'],
       how='inner'
@@ -32,27 +32,18 @@ file_configs = [
     {
         "name": "lof",
         "input_path": "/sci/labs/orzuk/mali.tsadok/UKB/all_data/results/final/lof/lof_final_result.csv",
-        "output_path": "/sci/labs/orzuk/mali.tsadok/UKB/all_data/results/final/lof/olida_lof_results.csv"
+        "output_path": "/sci/labs/orzuk/mali.tsadok/UKB/all_data/results/final/lof/olida_lof_0_results.csv"
     },
     {
         "name": "missense",
         "input_path": "/sci/labs/orzuk/mali.tsadok/UKB/all_data/results/final/lof/missense_final_result.csv",
-        "output_path": "/sci/labs/orzuk/mali.tsadok/UKB/all_data/results/final/lof/olida_missense_results.csv"
+        "output_path": "/sci/labs/orzuk/mali.tsadok/UKB/all_data/results/final/lof/olida_missense_0__results.csv"
     },
-    # {
-    #     "name": "missense_lof",
-    #     "input_path": "/sci/labs/orzuk/mali.tsadok/UKB/all_data/results/final/lof/missense_lof_final_result.csv",
-    #     "output_path": "/sci/labs/orzuk/mali.tsadok/UKB/all_data/results/final/lof/dig_missense_lof_results.csv"
-    # },
-    # {
-    #     "name": "lof_missense",
-    #     "input_path": "/sci/labs/orzuk/mali.tsadok/UKB/all_data/results/final/lof/lof_missense_final_result.csv",
-    #     "output_path": "/sci/labs/orzuk/mali.tsadok/UKB/all_data/results/final/lof/dig_lof_missense_results.csv"
-    # },
+
      {
         "name": "lof_missense_combined",
         "input_path": "/sci/labs/orzuk/mali.tsadok/UKB/all_data/results/final/lof/lof_missense_combined_final_result.csv",
-        "output_path": "/sci/labs/orzuk/mali.tsadok/UKB/all_data/results/final/lof/olida_lof_missense_combined_results.csv"
+        "output_path": "/sci/labs/orzuk/mali.tsadok/UKB/all_data/results/final/lof/olida_lof_missense_0__combined_results.csv"
     }
 ]
 
@@ -60,5 +51,5 @@ file_configs = [
 for config in file_configs:
     print(f"Processing {config['name']}...")
     df = pd.read_csv(config["input_path"])
-    filter_by_paralogs(df, df_paralogs, config["output_path"])
+    filter_by_paralogs(df, df_group, config["output_path"])
     print(f"Saved filtered {config['name']} to {config['output_path']}")

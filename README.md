@@ -40,7 +40,7 @@ dx run annotation_applet --batch-tsv thesa/UKbiobank/batch_files/chr16.0000.tsv 
 
 
 
-# Cluster Execution Instructions
+## Cluster Execution Instructions
 
 This project includes two pipelines: **singleton_pipeline** and **all_data_pipeline**.  
 
@@ -60,7 +60,8 @@ Each phase must be run **one by one**, following the order specified in the CSV 
 
 ## 2. Input Data
 
-* The first phase uses data downloaded from DNA Nexus.
+* The first phase uses data downloaded from DNA Nexus. and can be fount in
+?????????????????????????????
 * Place this data in the **input folder** specified for the first phase in the CSV file.
 
 ## 3. Running the Pipeline
@@ -71,22 +72,153 @@ Each phase must be run **one by one**, following the order specified in the CSV 
 * Input and output folders for each phase can be modified in the CSV file under the **input** and **output** columns.
 
 
+Sure — here is a **clean, organized Markdown version** you can paste directly into your `README.md`. I’ve kept the content faithful but improved structure, clarity, and grammar.
+
+---
+
 # Group-Based Permutation Pipeline
 
-This pipeline performs **group-based permutation analysis** for two types of gene sets: `olida` and `paralogs`.
+This pipeline performs **group-based permutation analysis** for two types of gene sets:
 
-## Input Data
-- Input files are located on the cluster.
-- Make sure the data paths are updated in the scripts if needed.
-
-## Pipeline Structure
-The order of scripts is defined in the CSV `group_based_permutation_pipeline.csv`.  
-Scripts are located in the corresponding folders in this repository:
-
-- `olida/`
-- `paralogs/`
+* **Olida**
+* **Paralogs**
 
 
 
+### Shared Input Files
+
+The `all_data_pipeline` generates the following ZIP archive, which serves as the **input** for this pipeline:
+
+```
+all_data_results.zip
+```
+
+This archive contains three CSV files:
+
+* `lof_final_result.csv`
+* `missense_final_result.csv`
+* `lof_missense_combined_final_result.csv`
+
+These files are required for all downstream analyses in both the **Olida** and **Paralogs** pipelines.
+
+
+## Olida Pipeline
+
+### Step 1: Preparation
+
+Run the Python script:
+
+```
+olida_preperations.py
+```
+
+#### Input Files
+
+* `olida.json`
+* `GeneCombination_olida.csv`
+
+#### Output Files
+
+This step generates three CSV files, split by score category:
+
+* `olida_pairs_filtered_by_score_0_original.csv`
+* `olida_pairs_filtered_by_score_1_original.csv`
+* `olida_pairs_filtered_by_score_2_3_original.csv`
+
+---
+
+Got it — you want **Step 2 to be the execution of the scripts**, not a conceptual “per-score analysis” phase. Here is a **corrected, minimal, and logically consistent version** where:
+
+* **Step 2 = running the three scripts**
+* No duplication of “phases”
+* The warning applies exactly to Steps 2–4
+
+You can drop this in as-is.
+
+---
+
+### Step 2: Run Score-Specific Analysis (Example: Score = 0)
+
+The following steps must be run **separately for each score category**.
+
+Below, we demonstrate the workflow using **score = 0** as an example.
+
+> ⚠️ **Important:**
+> For each score category (e.g., score 0, 1, or 2–3), you must manually update the input file paths and file names in the scripts below so that they correspond to the correct score.
+
+---
+
+### Step 2.1: Add Expected and Observed Counts
+
+Run:
+
+```
+add_expected_for_olida.py
+```
+
+#### Inputs
+
+* `olida_pairs_filtered_by_score_0_original.csv`
+* The three CSV files from `all_data_results.zip`
+
+#### Output
+
+* Adds **expected** and **observed** counts for score 0 gene pairs
+
+---
+
+### Step 2.2: Generate Permutations
+
+Run:
+
+```
+create_permutation_olida_model.py
+```
+
+#### Description
+
+* Generates **10,000 permutations** for the Olida model
+* Produces permutation files for score 0
+
+---
+
+### Step 2.3: Add Expected Values to Permutations
+
+Run:
+
+```
+add_expected_for_olida_permutations.py
+```
+
+#Perfect — here is the **corrected version** that makes it clear this step is **run once** and **aggregates all score categories**, while keeping the same style as the rest of your README.
+
+---
+
+Got it — you don’t want this to be labeled as part of **Step 2** at all.
+Here is the **correct fix**: renumber it as a **separate step** and clearly state it runs **once for all scores**.
+
+You can replace the section with this:
+
+---
+
+## Step 3: Null Distribution and P-Value Calculation
+
+After completing all permutations **for all score categories**, run:
+
+```
+olida_distribution.py
+```
+
+#### Description
+
+* Constructs the **null distribution** using permutation results from **all score categories**
+* Extracts **p-values** for the observed statistics
+
+> ⚠️ **Important:**
+> This step is executed **once**, after all score-specific analyses are complete.
+> Ensure that folder paths are correctly configured so the script can access:
+>
+> * Original (observed) files for all scores
+> * Permutation files for all scores
 
 

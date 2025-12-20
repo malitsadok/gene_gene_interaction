@@ -13,10 +13,9 @@ if [ "$#" -lt 1 ]; then
 fi
 
 type=$1
-pipeline_scripts=${2:-"pipeline_scripts"}  # Default to "pipeline_scripts" if not provided
-subfolder_list=("${@:3}")  # Subfolder list starts from the third argument
+ # Subfolder list starts from the third argument
 
-csv_file="/sci/home/mali.tsadok/${pipeline_scripts}.csv"
+csv_file="/sci/home/mali.tsadok/scripts_singleton_pipeline.csv"
 
 bash_script="calc_statistic_2.sh"
 
