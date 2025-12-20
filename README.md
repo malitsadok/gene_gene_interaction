@@ -125,17 +125,7 @@ This step generates three CSV files, split by score category:
 * `olida_pairs_filtered_by_score_1_original.csv`
 * `olida_pairs_filtered_by_score_2_3_original.csv`
 
----
 
-Got it — you want **Step 2 to be the execution of the scripts**, not a conceptual “per-score analysis” phase. Here is a **corrected, minimal, and logically consistent version** where:
-
-* **Step 2 = running the three scripts**
-* No duplication of “phases”
-* The warning applies exactly to Steps 2–4
-
-You can drop this in as-is.
-
----
 
 ### Step 2: Run Score-Specific Analysis (Example: Score = 0)
 
