@@ -60,8 +60,7 @@ Each phase must be run **one by one**, following the order specified in the CSV 
 
 ## 2. Input Data
 
-* The first phase uses data downloaded from DNA Nexus. and can be fount in
-?????????????????????????????
+* The first phase uses data downloaded from DNA Nexus. 
 * Place this data in the **input folder** specified for the first phase in the CSV file.
 
 ## 3. Running the Pipeline
