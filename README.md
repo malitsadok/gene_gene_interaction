@@ -212,8 +212,4 @@ These files are required for all downstream analyses in both pipelines.
 
 > ⚠️ Ensure file paths are updated correctly before running each step. Step 5 is run **once**, after all permutations are complete.
 
----
 
-This keeps the README **linear, compact, and readable** without tables, while maintaining **Inputs / Script / Output / Description** consistently.
-
-If you want, I can also **add small emojis or bullets** to visually separate steps, which makes it even more readable. Do you want me to do that?
