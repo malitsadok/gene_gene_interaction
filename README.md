@@ -9,6 +9,9 @@ It contains the necessary files and structure to run the annotation workflow in 
 - Create an applet on DNA Nexus with the **same structure** as the `annotation_applet` folder.
 - Each DNA Nexus applet automatically runs the `code.sh` script when executed.
 
+example of how running the applet  chromosome 21 block number 4 :
+dx run annotation_applet -i vcf_in='Bulk/Exome sequences/Population level exome OQFE variants, pVCF format - final release/ukb23157_c21_b4_v1.vcf.gz' --destination "/results/"
+
 ## code.sh Details
 The `code.sh` script runs a public Docker image:
 
@@ -32,51 +35,41 @@ Example for chromosome 16:
 ```bash
 dx run annotation_applet --batch-tsv thesa/UKbiobank/batch_files/chr16.0000.tsv --destination="Gene Pair Interactions:/results/chr16"
 ```
-
-* `--destination` specifies the output folder.
-* The batch TSV file contains all VCF files for chromosome 16.
-
-The batch TSV contains the paths for all files in chromosome 16.
+ explanation how to create batch file you can find here:
+ https://documentation.dnanexus.com/user/running-apps-and-workflows/running-batch-jobs
 
 
 
-## Cluster Part
+# Cluster Execution Instructions
 
-This part of the project is designed to run on the **university cluster**.
-It uses the folder **pipeline_scripts_singleton** and executes the pipeline in multiple phases.
+This project includes two pipelines: **singleton_pipeline** and **all_data_pipeline**.  
 
-### Requirements
+* **all_data_pipeline**: generates gene-pair combinations considering all variants (both singleton and non-singleton).  
+* **singleton_pipeline**: generates gene-pair combinations where at least one of the genes is restricted to singleton variants.  
 
-* Access to the university cluster.
-* The `pipeline_scripts_singleton` folder containing all necessary scripts.
-* A CSV file specifying the phases, which includes:
+Each pipeline contains:
 
+* A CSV file (`scripts_singleton_pipeline.csv` or `scripts_all_data_pipeline.csv`) specifying the phases, which includes:
   * The shell script to run for each phase.
   * The input folder for that phase.
   * The output folder for that phase.
 
-### Workflow
+## 1. Phase Execution
 
-1. **Phase Execution:**
-   Each phase must be run **one by one** according to the order specified in the CSV file.
+Each phase must be run **one by one**, following the order specified in the CSV file.
 
-2. **Input Data:**
+## 2. Input Data
 
-   * The first phase uses data downloaded from DNA Nexus.
-   * This data should be placed in the input folder of the first phase.
+* The first phase uses data downloaded from DNA Nexus.
+* Place this data in the **input folder** specified for the first phase in the CSV file.
 
-3. **Running Phases:**
+## 3. Running the Pipeline
 
-   * For each phase, use the corresponding shell script from the CSV.
-   * Each shell script calls a Python file; the script expects the Python file to be located in the path it is looking for.
-   * For the singleton pipeline, both the shell and Python files are in the `singleton_pipeline` folder.
-   * Make sure the input and output folders are correctly specified for each run.
+* For each phase, use the **corresponding shell script** from the CSV file.
+* Each shell script calls a Python file, which is expected to be located at the path specified in the script.
+* You can change the Python file location directly in the shell script if needed.
+* Input and output folders for each phase can be modified in the CSV file under the **input** and **output** columns.
 
-### Running the all data Pipeline  
-
-* The same pipeline can be run on the **all-data version of analysis**.
-* For this version, there are some differences in the scripts and in the folder structure for storing the data.
-* The new pipeline is defined in the CSV file `scripts_all_data_pipeline`  and the shell and Python files are in the `all_data_pipeline` folder.
 
 # Group-Based Permutation Pipeline
 
