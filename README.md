@@ -180,16 +180,6 @@ Run:
 add_expected_for_olida_permutations.py
 ```
 
-#Perfect — here is the **corrected version** that makes it clear this step is **run once** and **aggregates all score categories**, while keeping the same style as the rest of your README.
-
----
-
-Got it — you don’t want this to be labeled as part of **Step 2** at all.
-Here is the **correct fix**: renumber it as a **separate step** and clearly state it runs **once for all scores**.
-
-You can replace the section with this:
-
----
 
 ## Step 3: Null Distribution and P-Value Calculation
 
