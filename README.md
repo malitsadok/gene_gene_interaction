@@ -202,3 +202,106 @@ olida_distribution.py
 > * Permutation files for all scores
 
 
+## Paralogs Pipeline
+
+This pipeline performs **group-based permutation analysis** for **paralog gene pairs**.
+
+---
+
+### Step 1: Preparation
+
+Run the notebook:
+
+```
+paralogs_preperation.ipynb
+```
+
+#### Input
+
+* `Original_Pralogs_Data.csv`
+
+#### Output
+
+* `paralogs.csv`
+
+---
+
+### Step 2: Add Expected and Observed Counts
+
+Run:
+
+```
+add_expected_for_paralogs.py
+```
+
+#### Description
+
+* Computes **expected** and **observed** counts for paralog gene pairs
+
+#### Inputs
+
+* `paralogs.csv`
+* The three CSV files from `all_data_results.zip`
+
+#### Output
+
+* `paralogs_lof_results.csv`
+* `paralogs_missense_results.csv`
+* `paralogs_lof_missense_combined_results.csv`
+
+---
+
+### Step 3: Generate Permutations
+
+Run:
+
+```
+create_permutation.py
+```
+
+#### Description
+
+* Generates permutation datasets for the paralogs model using `paralogs.csv`
+
+---
+
+### Step 4: Add Expected Values to Permutations
+
+Run:
+
+```
+add_expected_for_permutation_paralogs.py
+```
+
+#### Description
+
+* Adds expected values for each permutation
+
+#### Inputs
+
+* Permutation files generated in Step 3
+* The three CSV files from `all_data_results.zip`
+
+#### Output
+
+* Updated permutation files with observed and expected counts for each variant class
+
+---
+
+### Step 5: Null Distribution and P-Value Calculation
+
+Run the notebook:
+
+```
+paralog_distribution.ipynb
+```
+
+#### Description
+
+* Constructs the **null distribution**
+* Extracts **p-values** for paralog gene pairs
+
+> ⚠️ **Important:**
+> For each step, ensure the file paths are updated to the correct location.
+
+

@@ -23,14 +23,12 @@ def calc_p(folder_input ,folder_output ):
 
     print ("m")
     print (m)
-    result_df = combined_df.groupby('Individual', as_index=False)[["lof" , "missense" , "missense_singleton" , "lof_singleton"]].sum()
+    result_df = combined_df.groupby('Individual', as_index=False)[["lof" , "missense" ]].sum()
 
 
     result_df["p_lof"] = result_df["lof"] / m
     result_df["p_missense"] = result_df["missense"] / m
-    result_df["p_missense_singleton"] = result_df["missense_singleton"] / m
-    result_df["p_lof_singleton"] = result_df["lof_singleton"] / m
-
+  
     print (result_df.head())
     
     result_df.to_csv(folder_output+"total_Individual_count.csv", index= False)

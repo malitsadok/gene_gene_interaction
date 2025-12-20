@@ -33,11 +33,21 @@ def count_appearance_for_each_snv(df):
     ) / (2 * total_individuals_number)
 
     # Filter by AF < 0.001 (0.1%)
-    rare_snvs = snv_count_df[snv_count_df['allele_frequency'] < 0.01]
+    rare_snvs = snv_count_df[snv_count_df['allele_frequency'] < 0.001]
 
     return rare_snvs
 
 
+
+
+# def count_appearance_for_each_snv(df) : 
+
+#     #Count the number of individuals who have  SNV in their DNA.
+#     snv_count_df = pd.DataFrame({"count" : df.groupby(['SNV','count_Mut'  ,'gene'  ]).count_Mut.count()} )
+#     snv_count_df = snv_count_df.pivot_table( index=['SNV', 'gene'], columns='count_Mut', values='count', fill_value=0).reset_index()
+    
+#     snv_count_df.rename(columns={1: 'countHetero' ,2 : "countHomo"}, inplace=True)
+#     return snv_count_df
 
 def concat_chromosome_files_with_parts(dfs, chromosome_name, folder_output):
     create_folder_if_not_exists(folder_output)
@@ -214,13 +224,27 @@ def process_file (name , folder_input , type=1  ) :
     
         full_dict_df = pd.concat([df_one, df_two_collapsed], ignore_index=True)
 
-      
+        # count_unique_gene_df  = full_dict_df.groupby(["SNV"]).gene.nunique()
+        
+        # print ("number if unique snv is: "+str (count_unique_gene_df.shape[0]) )
+        
+        # more_than_one_gene_df = count_unique_gene_df[count_unique_gene_df >1]
+        # print ("There are " + str(more_than_one_gene_df.shape[0]) + " snv with more than one gene related")
+        
+          
+        # full_dict_df = full_dict_df.groupby('SNV').filter(lambda x: len(x['gene'].unique()) ==  1)
+        # print ("shape after filtering  all the snv related to more than one gene is : " +str (full_dict_df.shape[0]))
+
+        
+        #data_df = data_df.drop_duplicates()
     
 
         data_df['count_Mut'] = data_df['Mut'].apply(def_count) #change the mut to number
 
         dict_df =full_dict_df[['SNV' , 'gene' ,'mutation_type'  ]].copy()
-        
+        #dict_df = dict_df.drop_duplicates(subset="SNV")
+        #print ("data_df.shape")
+        #print (data_df.shape)
         data_df  = dict_df.merge(data_df, on= ['SNV' ] , how = 'inner')
         print (data_df.shape)
 
@@ -240,6 +264,7 @@ def process_file (name , folder_input , type=1  ) :
         
     return dfs
         
+        #filtered_df_cutoff.to_csv(folder_output+name+ "_"+ str(number)+ ".csv", index= False)
         
 def create_folder_if_not_exists(folder_path):
     if not os.path.exists(folder_path):
