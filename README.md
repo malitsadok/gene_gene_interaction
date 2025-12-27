@@ -105,6 +105,11 @@ These files are required for all downstream analyses in both pipelines.
 
 ## Olida Pipeline
 
+> 📦 **Data availability:**  
+> The input files `olida.json`, `GeneCombination_olida.csv`, and `paralogs.csv` are available on Zenodo: https://zenodo.org/records/17999718
+
+
+
 ### Step 1: Preparation
 
 **Script:** `olida_preperations.py`
@@ -212,7 +217,6 @@ These files are required for all downstream analyses in both pipelines.
 
 > ⚠️ Ensure file paths are updated correctly before running each step. Step 5 is run **once**, after all permutations are complete.
 
-> 📦 **Data availability:**  
-> The input files `olida.json`, `GeneCombination_olida.csv`, and `paralogs.csv` are available on Zenodo: https://zenodo.org/records/17999718
+
 
 
